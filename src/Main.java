@@ -96,7 +96,10 @@ public class Main {
         //Output a date in the format "January 1st, 2018".
         System.out.print("\nWhat is the index of the date you want to be outputted in the format \"January 1st, 2018\"? ");
         System.out.println("The formatted date is " + formattedDate(hundredRandomDates.get(sc.nextInt())));
-        //I had completely forgotten to submit the previous story, so if it looks like I completed this story incredibly quickly, it's because I temporarily removed this code so I could post the for the previous story.
+
+        //Output Weekdays
+        System.out.println("This is the weekdays: " +);
+
     }
 
     private static String formattedDate(LocalDateTime date) {
@@ -200,4 +203,11 @@ public class Main {
         }
         return earlyDate;
     }
-}
+    public enum Days{
+        Sunday, Monday, Tuesday,Wednesday, Thursday,
+        Friday, Saturday
+
+    }
+
+    }
+
