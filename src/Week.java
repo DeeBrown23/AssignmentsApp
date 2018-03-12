@@ -79,4 +79,8 @@ public class Week {
         weekend.add(seventhDay);
         return weekend;
     }
+
+    public void setFifthDay(Main.Days fifthDay) {
+        this.fifthDay = fifthDay;
+    }
 }
