@@ -26,7 +26,7 @@ public class Main {
         System.out.println("The five weeks, the date will be " + fiveWeeksLater);
 
         //Initialize a LocalDateTime object to your birthdate and the time 12:35 PM.
-        LocalDateTime birthDate = LocalDateTime.of(1999, 2, 7, 12, 35);
+        LocalDateTime birthDate = LocalDateTime.of(1995, 12, 10, 12, 35);
         System.out.println("Your birthdate is " + birthDate);
 
         //Output the day of the week (Sunday-Saturday) that you were born.
@@ -354,7 +354,7 @@ public class Main {
 
         }
     }
-    
+
 
 
 
