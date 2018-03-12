@@ -1,6 +1,4 @@
-import javax.swing.text.DateFormatter;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -120,6 +118,30 @@ public class Main {
         //Output Points Category
         ArrayList<Category> pointsCategory =new ArrayList<>();
         System.out.println("These are the categories for points: " +showPointsCategory(pointsCategory));
+
+        //Output Assign1
+        int prority = rand.nextInt(3);
+        LocalDateTime meet = randomDateGenerator();
+        Courses course = randomCourseGenerator();
+        Category category = randomCategoryGenerator();
+        Assignment assign1 = new Assignment(meet, course, category, prority);
+        System.out.println("This is your schedule: " +assign1);
+
+        //Output Assign2
+        int prority2 = rand.nextInt(3);
+        LocalDateTime meet2 = randomDateGenerator();
+        Courses course2 = randomCourseGenerator();
+        Category category2 = randomCategoryGenerator();
+        Assignment assign2 = new Assignment(meet2, course2, category2, prority2);
+        System.out.println("This is your schedule: " +assign2);
+
+        //Output Assign3
+        int prority3 = prority;
+        LocalDateTime meet3 = meet;
+        Courses course3 = course;
+        Category category3 = category;
+        Assignment assign3 = new Assignment(meet3, course3, category3, prority3);
+        System.out.println("This is your schedule: " +assign3);
 
 
 
@@ -250,30 +272,35 @@ public class Main {
     }
 
     public enum Courses {
-        DataStructures, Spanish, Stats, PoliticalScience
+        Data_Structures, Spanish, Stats, Political_Science
     }
 
     public static ArrayList<Courses> showMondayClasses(ArrayList<Courses> mondayClasses) {
-        mondayClasses.add(Courses.DataStructures);
+        mondayClasses.add(Courses.Data_Structures);
         mondayClasses.add(Courses.Spanish);
         mondayClasses.add(Courses.Stats);
-        mondayClasses.add(Courses.PoliticalScience);
+        mondayClasses.add(Courses.Political_Science);
         return mondayClasses;
     }
 
     public static ArrayList<Courses> showWednesdayClasses(ArrayList<Courses> wednesdayClasses) {
-        wednesdayClasses.add(Courses.DataStructures);
+        wednesdayClasses.add(Courses.Data_Structures);
         wednesdayClasses.add(Courses.Spanish);
         wednesdayClasses.add(Courses.Stats);
-        wednesdayClasses.add(Courses.PoliticalScience);
+        wednesdayClasses.add(Courses.Political_Science);
         return wednesdayClasses;
     }
 
     public static ArrayList<Courses> showFridayClasses(ArrayList<Courses> fridayClasses) {
-        fridayClasses.add(Courses.DataStructures);
+        fridayClasses.add(Courses.Data_Structures);
         fridayClasses.add(Courses.Spanish);
         fridayClasses.add(Courses.Stats);
         return fridayClasses;
+    }
+
+    public static Courses randomCourseGenerator(){
+        int pick = new Random().nextInt(Courses.values().length);
+        return Courses.values()[pick];
     }
 
     public enum Category {
@@ -288,7 +315,46 @@ public class Main {
         pointsCategory.add(Category.Final_Exam);
         return pointsCategory;
     }
-}
+
+    public static Category randomCategoryGenerator(){
+        int pick = new Random().nextInt(Category.values().length);
+        return Category.values()[pick];
+    }
+
+
+
+    public static class Assignment{
+        public LocalDateTime courseMeet;
+        public Courses mycourses;
+        public Category points;
+        public int priority;
+        Random rand = new Random();
+
+        public Assignment(LocalDateTime date, Courses courses, Category category, int priority) {
+            this.courseMeet = date;
+            this.mycourses = courses;
+            this.points = category;
+            this.priority = priority;
+        }
+
+        @Override
+        public String toString() {
+            return "Assignment{" +
+                    "courseMeet = " + courseMeet +
+                    ", mycourses = " + mycourses +
+                    ", points = " + points +
+                    ", priority = " + priority +
+                    '}';
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            return super.equals(obj);
+        }
+
+        }
+    }
+    
 
 
 
