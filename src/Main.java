@@ -1,4 +1,5 @@
 import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -142,6 +143,38 @@ public class Main {
         Category category3 = category;
         Assignment assign3 = new Assignment(meet3, course3, category3, prority3);
         System.out.println("This is your schedule: " +assign3);
+
+        //Output Earliest
+        System.out.println("This is your earliest class: " +whichIsEarlier(meet, meet2, meet3));
+
+        //Create file with 100 random Assignments
+        System.out.println("How many assignments do you wanna generate? ");
+        int numElements = sc.nextInt();
+        ArrayList<Assignment> hundredRandomAssignments = randomAssignmentArray(numElements);
+        hundredRandomAssignments.forEach(d -> System.out.println("assignment is: " + d));
+
+        //file without duplicates
+        Set<Assignment> withoutDuplicates = removeDuplicates(hundredRandomAssignments);
+        withoutDuplicates.forEach(d -> System.out.println("Non-Duplicate Assignment is: " +d));
+
+        //number assignment for course
+        System.out.println("What course are you looking for: ");
+        String courseName = sc.next();
+        int numberOfCourses = searchByCourse(withoutDuplicates, courseName);
+        System.out.println("The number of course with that name is " + numberOfCourses);
+
+        //what are user course assignments
+        System.out.println("What course are you looking for: ");
+        String userCourse = sc.next();
+        ArrayList<Assignment> courseAssignment = countAssignments(hundredRandomAssignments, userCourse);
+        System.out.println("The Assignments for " +userCourse + " are: " +courseAssignment);
+
+
+
+
+
+
+
 
 
 
@@ -321,6 +354,66 @@ public class Main {
         return Category.values()[pick];
     }
 
+    public static LocalDateTime whichIsEarlier(LocalDateTime meet, LocalDateTime meet2, LocalDateTime meet3){
+            int answer1 = meet.compareTo(meet2);
+            int answer2 = meet2.compareTo(meet);
+            LocalDateTime finalAnswer = null;
+            if (answer1 < answer2) {
+                finalAnswer = meet;
+            }
+            if (answer2 < answer1) {
+                 finalAnswer = meet2;
+            }
+            return finalAnswer;
+
+    }
+
+    public static Assignment randomAssignmentGenerator(){
+        int prority = rand.nextInt(3);
+        LocalDateTime meet = randomDateGenerator();
+        Courses course = randomCourseGenerator();
+        Category category = randomCategoryGenerator();
+        Assignment assign = new Assignment(meet, course, category, prority);
+        return assign;
+    }
+
+
+
+    public static ArrayList<Assignment> randomAssignmentArray(int numElements) {
+        ArrayList<Assignment> returnArray = new ArrayList<>();
+        for (int i = 0; i < numElements; i++) {
+            returnArray.add(randomAssignmentGenerator());
+        }
+        return returnArray;
+    }
+
+    public static Set<Assignment> removeDuplicates(ArrayList<Assignment> hundredRandomAssignments){
+        Set<Assignment> dateSet = new HashSet<>();
+        for (Assignment assignment : hundredRandomAssignments) {
+            if (dateSet.contains(assignment))
+            dateSet.add(assignment);
+        }
+        return dateSet;
+    }
+
+    public static int searchByCourse(Set<Assignment> withoutDuplicates, String courseName) {
+        Set<Assignment> dataSet = new HashSet<>();
+        for (Assignment assignment : withoutDuplicates) {
+            if (!dataSet.contains(courseName))
+                dataSet.add(assignment);
+        }
+        return dataSet.size();
+    }
+
+    public static ArrayList<Assignment> countAssignments(ArrayList<Assignment> hundredRandomAssignments, String userCourse) {
+        ArrayList<Assignment> courseAssignment = new ArrayList<>();
+        for (Assignment assignment : hundredRandomAssignments) {
+            if (hundredRandomAssignments.contains(userCourse))
+                courseAssignment.add(assignment);
+        }
+        return courseAssignment;
+    }
+
 
 
     public static class Assignment{
@@ -328,7 +421,7 @@ public class Main {
         public Courses mycourses;
         public Category points;
         public int priority;
-        Random rand = new Random();
+
 
         public Assignment(LocalDateTime date, Courses courses, Category category, int priority) {
             this.courseMeet = date;
@@ -346,11 +439,23 @@ public class Main {
                     ", priority = " + priority +
                     '}';
         }
+        public int compareTo(Object obj){
+            if (obj.equals(courseMeet)){
+                return 0;
+            }
+            int answer = courseMeet.compareTo((ChronoLocalDateTime<?>) obj);
+            return answer;
+
+
+
+        }
 
         @Override
         public boolean equals(Object obj) {
             return super.equals(obj);
         }
+
+
 
         }
     }
